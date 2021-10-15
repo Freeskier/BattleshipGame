@@ -1,0 +1,42 @@
+.message-container {
+    padding: 5px 2px 2px 2px;
+    border-bottom: 1px solid grey;
+    background-color: hotpink;
+    border-radius: 10px;
+    text-align: left;
+    
+}
+
+p {
+    margin-left: 10px;
+    margin-top: -1px;
+}
+
+
+.messages-container {
+    background-color: hotpink;
+    border-radius: 10px;
+}
+
+.chat-container {
+    border-radius: 15px;
+    padding-bottom: 1px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-header {
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.date-header {
+    display: inline-block;
+    margin-right: 5px;
+    margin-top: 5px;
+
+}

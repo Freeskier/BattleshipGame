@@ -8,11 +8,11 @@ function Square({onClick, type, x, y}) {
             case 0: return (
                 <div className='grid-item water' onClick={() => onClick(x, y)}> </div>)
             case 1: return (
-                <div className='grid-item black' onClick={() => onClick(x, y)}> </div>)
+                <div className='black' onClick={() => onClick(x, y)}> </div>)
             case 2: return (
-                <div className='grid-item hit' onClick={() => onClick(x, y)}> </div>)
+                <div className='hit' onClick={() => onClick(x, y)}> </div>)
             case 3: return (
-                <div className='grid-item sunk onClick={() => onClick(x, y)}'>
+                <div className='sunk'>
                     <div className='line1'/>    
                     <div className='line2'/>    
                 </div>)

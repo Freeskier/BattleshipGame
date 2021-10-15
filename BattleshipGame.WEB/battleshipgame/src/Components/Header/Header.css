@@ -1,10 +1,16 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+
+
 .container {
     position: fixed;
     z-index: 999;
     width: 100%;
+    font-family: "Open Sans", sans-serif;
 }
 
 .header-container {
+    display: flex;
+    justify-content: space-between;
     background-color: #3498db;
     padding: 20px 20px 20px 20px;
     border-radius: 0 0 15px 15px;
@@ -14,4 +20,27 @@
     font-size: 3em;
     font-weight: bold;
     color: white;
+    display: inline-block;
+}
+
+.profile {
+    display: inline-block;
+    align-self: center;
+}
+
+.profile:hover .profile-text:hover {
+    cursor: pointer;
+}
+
+
+
+.profile-text {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.profile-text {
+    background-origin: a;
 }

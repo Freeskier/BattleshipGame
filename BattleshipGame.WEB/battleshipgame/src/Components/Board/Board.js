@@ -2,7 +2,7 @@ import React from 'react';
 import './Board.css';
 import Square from './Square';
 
-function Board() {
+function Board({isDisabled}) {
 
 
     const squaresData = [
@@ -31,6 +31,8 @@ function Board() {
         [0, 1, 2, 3, 2, 1, 0, 0, 1, 3]
     ];
 
+    
+
     function onSquareClick(x, y) {
         console.log(x)
     }
@@ -53,9 +55,12 @@ function Board() {
     );
 
     return ( 
+        <>
         <div className='grid-container'>
             {mergedData}
+            <div className={isDisabled?'disable':''} ></div>
         </div> 
+        </>
     );
 }
 
