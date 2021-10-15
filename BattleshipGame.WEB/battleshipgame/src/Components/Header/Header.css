@@ -1,0 +1,17 @@
+.container {
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+}
+
+.header-container {
+    background-color: #3498db;
+    padding: 20px 20px 20px 20px;
+    border-radius: 0 0 15px 15px;
+}
+
+.header-title {
+    font-size: 3em;
+    font-weight: bold;
+    color: white;
+}
