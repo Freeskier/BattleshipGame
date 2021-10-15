@@ -5,7 +5,7 @@
     height: 400px;
     width: 400px;
     background-color: #e0e0e0;
-    
+    position: relative;
 }
 
 .grid-item {
@@ -14,7 +14,7 @@
     border: 1px solid rgb(255, 255, 255);
 }
 .grid-item:hover {
-    border-width: 4px;
+    border-width: 3px;
     transition: all 100ms ease-in-out;
     color: rgb(128, 22, 209);
     cursor: pointer;
@@ -31,18 +31,28 @@
 
 .black {
     background-color: black;
+    user-select: none;
+    border: 1px solid rgb(255, 255, 255);
 }
 
 .sunk {
     background-color: red;
+    user-select: none !important;
+    -moz-user-select: none !important;
+    border: 1px solid rgb(255, 255, 255);
+
+    
 }
 
 .hit {
     background-color: royalblue;
+    user-select: none;
+    border: 1px solid rgb(255, 255, 255);
 }
 
 .water {
     background-color: rgb(97, 192, 255);
+    
 }
 
 .empty {
@@ -63,4 +73,23 @@
     -webkit-transform: 
         translateY(10px)
         rotate(135deg);
+}
+
+.stats {
+    background-color: tomato;
+}
+
+.disable {
+    background-color: white;
+    filter:alpha(opacity=60);
+    opacity: 0.6;
+    -moz-opacity:0.60; 
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.ship-container {
+
 }
