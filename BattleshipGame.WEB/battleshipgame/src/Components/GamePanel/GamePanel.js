@@ -25,9 +25,7 @@ function GamePanel() {
                     </div>
                 </div>
             </div>
-            <div className='chat-container'>
-                <Chat/>
-            </div>
+            <Chat/>
         </div>
      );
 }

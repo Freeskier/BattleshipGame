@@ -1,11 +1,25 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import './Chat.css'
 import Lobby from './Lobby';
 import Message from './Message';
 
 function Chat() {
 
+    const messagesEndRef = useRef(null)
+
+    const scrollToBottom = () => {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+
+    useEffect(scrollToBottom, []); 
+
     const messages =[
+        {user:'Kazik', date: '21-03-2323', text: "asdsadas"},
+        {user:'Julek', date: '21-03-2323', text: "asdxzc"},
+        {user:'Sylwia', date:'21-03-2323', text: "xczczxczxczxczx"},
+        {user:'Kazik', date: '21-03-2323', text: "asdsadas"},
+        {user:'Julek', date: '21-03-2323', text: "asdxzc"},
+        {user:'Sylwia', date:'21-03-2323', text: "xczczxczxczxczx"},
         {user:'Kazik', date: '21-03-2323', text: "asdsadas"},
         {user:'Julek', date: '21-03-2323', text: "asdxzc"},
         {user:'Sylwia', date:'21-03-2323', text: "xczczxczxczxczx"},
@@ -25,8 +39,12 @@ function Chat() {
                 <h2>Chat</h2>
                 <div className='messages-container'>
                     {mappedMessages}
+                    <div ref={messagesEndRef} />
                 </div>
-                <input placeholder='Write a message...'></input>
+                <div className='chat-input'>
+                    <input placeholder='Write a message...'></input>
+                    <button className='chat-button'>Send</button>
+                </div>
             </div>
             <Lobby/>
         </div>

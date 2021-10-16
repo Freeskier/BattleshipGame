@@ -9,7 +9,7 @@
 }
 
 .boards-container {
-    display: flex;
+    display:flexbox;
     justify-content: space-between;
 }
 
@@ -18,9 +18,4 @@
     padding: 50px 50px 10px 50px;
     display: inline-block;
     
-}
-
-.chat-container {
-    background-color: yellow;
-    margin: 60px;
 }
