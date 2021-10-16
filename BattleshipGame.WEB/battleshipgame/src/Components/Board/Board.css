@@ -76,7 +76,11 @@
 }
 
 .stats {
-    background-color: tomato;
+    background-color: rgb(255, 255, 255);
+    display: inline-block;
+
+    margin-left: 5px;
+    height: min-content;
 }
 
 .disable {
@@ -90,6 +94,26 @@
     position: absolute;
 }
 
+.board-with-stats {
+    display: flex;
+}
+
 .ship-container {
-    
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin: 10px 10px 10px 10px;
+}
+
+.ship-item{
+    border: 1px solid white;
+    background-color: rgb(2, 1, 1);
+    width: 12px;
+    height: 12px;
+}
+
+.ship-item-sunk {
+    border: 1px solid white;
+    background-color: rgb(236, 1, 1);
+    width: 12px;
+    height: 12px;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import './Chat.css'
+import Lobby from './Lobby';
 import Message from './Message';
 
 function Chat() {
@@ -12,19 +13,22 @@ function Chat() {
 
     const mappedMessages = messages.map(
         (val) => <Message 
+            key = {Math.random() * Date.now()}
             text={val.text}
             date={val.date}
             user={val.user}/>
     )
 
     return ( 
-        <div className='chat-container'>
-            <h2>Chat</h2>
-            <div className='messages-container'>
-                {mappedMessages}
+        <div className='chat-and-lobby'>
+            <div className='chat-container'>
+                <h2>Chat</h2>
+                <div className='messages-container'>
+                    {mappedMessages}
+                </div>
+                <input placeholder='Write a message...'></input>
             </div>
-            <input placeholder='Write a message...'></input>
-
+            <Lobby/>
         </div>
      );
 }

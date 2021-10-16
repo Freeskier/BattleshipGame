@@ -7,6 +7,7 @@ function Register() {
 
     function onRegisterClick() {
         toast.success('Succesfully signed up!')
+        
     }
 
 

@@ -42,12 +42,21 @@ function Board({isDisabled}) {
             return squaresData.map(
                 (square2, index2) => {
                     if(index===0 && index2 === 0)
-                        return <div className='empty'></div>
+                        return <div 
+                        className='empty'
+                        key = {Math.random() * Date.now()}></div>
                     if(index2 === 0)
-                        return <div className='outter-grid-item'>{squaresData[index][0]}</div>
+                        return <div
+                        key = {Math.random() * Date.now()}
+                         className='outter-grid-item'>{squaresData[index][0]}</div>
                     if(index === 0) 
-                        return <div className='outter-grid-item'>{squaresData[index2][1]}</div>
-                    return <Square x={index - 1} y={index2 - 1} onClick={onSquareClick} type={exampleData[index-1][index2-1]} key={index.toString() + ' ' + index2.toString()}/>
+                        return <div 
+                        key = {Math.random() * Date.now()}
+                        className='outter-grid-item'>{squaresData[index2][1]}</div>
+                    return <Square x={index - 1} y={index2 - 1} 
+                        onClick={onSquareClick} 
+                        type={exampleData[index-1][index2-1]}
+                        key = {Math.random() * Date.now()}/>
                 }
             )
         }

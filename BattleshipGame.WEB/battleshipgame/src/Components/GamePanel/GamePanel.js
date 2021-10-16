@@ -12,11 +12,17 @@ function GamePanel() {
             <div className='boards-container'>
                 <div className='board-container'>
                     <h1>Your board </h1>
-                    <Board isDisabled={true}/>
+                    <div className='board-with-stats'>
+                        <Board/>
+                        <Stats/>
+                    </div>
                 </div>
                 <div className='board-container'>
                     <h1>Enemy's board </h1>
-                    <Board/>
+                    <div className='board-with-stats'>
+                        <Board/>
+                        <Stats/>
+                    </div>
                 </div>
             </div>
             <div className='chat-container'>

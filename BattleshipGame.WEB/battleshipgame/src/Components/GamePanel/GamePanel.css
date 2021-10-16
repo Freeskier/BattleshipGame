@@ -9,12 +9,13 @@
 }
 
 .boards-container {
+    display: flex;
+    justify-content: space-between;
 }
 
 .board-container {
     
     padding: 50px 50px 10px 50px;
-    
     display: inline-block;
     
 }

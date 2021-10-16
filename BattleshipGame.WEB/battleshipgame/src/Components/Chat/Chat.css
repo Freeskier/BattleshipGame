@@ -21,6 +21,7 @@ p {
 .chat-container {
     border-radius: 15px;
     padding-bottom: 1px;
+    display: inline-block;
 }
 
 .header {
@@ -38,5 +39,28 @@ p {
     display: inline-block;
     margin-right: 5px;
     margin-top: 5px;
+}
 
+.chat-and-lobby {
+    display: flex;
+}
+
+.lobby-container {
+    display: inline-block;
+    width: 300px;
+    background-color: hotpink;
+    border-radius: 0px 15px 15px 0px;
+}
+
+.lobby-user {
+    display: flex;
+    align-content: flex-start;
+    align-items: flex-start;
+    margin-left: 10px;
+    border-bottom: 1px solid grey;
+}
+
+.lobby-user:hover {
+    background-color: rgb(117, 62, 90);
+    cursor: pointer;
 }
