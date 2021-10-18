@@ -42,7 +42,7 @@ function Chat() {
                     <div ref={messagesEndRef} />
                 </div>
                 <div className='chat-input'>
-                    <input placeholder='Write a message...'></input>
+                    <input className='chat-input-input' placeholder='Write a message...'></input>
                     <button className='chat-button'>Send</button>
                 </div>
             </div>

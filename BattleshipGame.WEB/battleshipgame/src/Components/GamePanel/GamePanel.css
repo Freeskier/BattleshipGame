@@ -11,6 +11,7 @@
 .boards-container {
     display:flexbox;
     justify-content: space-between;
+    padding-bottom: 50px;
 }
 
 .board-container {
@@ -18,4 +19,9 @@
     padding: 50px 50px 10px 50px;
     display: inline-block;
     
+}
+
+.game-panel-with-chat {
+    width: fit-content;
+    margin: 0 auto;
 }

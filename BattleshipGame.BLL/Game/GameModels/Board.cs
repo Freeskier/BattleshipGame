@@ -19,6 +19,8 @@ namespace BattleshipGame.BLL.Game.GameModels
             CreateSetOfShips();
         }
 
+        
+
         private void InitializeMap()
         {
             map = new int[WIDTH, HEIGHT];

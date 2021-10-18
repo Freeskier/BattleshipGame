@@ -9,23 +9,25 @@ function GamePanel() {
 
     return ( 
         <div className='game-panel-container'>
-            <div className='boards-container'>
-                <div className='board-container'>
-                    <h1>Your board </h1>
-                    <div className='board-with-stats'>
-                        <Board/>
-                        <Stats/>
+            <div className='game-panel-with-chat'>
+                <div className='boards-container'>
+                    <div className='board-container'>
+                        <h1>Your board </h1>
+                        <div className='board-with-stats'>
+                            <Board/>
+                            <Stats/>
+                        </div>
+                    </div>
+                    <div className='board-container'>
+                        <h1>Enemy's board </h1>
+                        <div className='board-with-stats'>
+                            <Board/>
+                            <Stats/>
+                        </div>
                     </div>
                 </div>
-                <div className='board-container'>
-                    <h1>Enemy's board </h1>
-                    <div className='board-with-stats'>
-                        <Board/>
-                        <Stats/>
-                    </div>
-                </div>
+                <Chat/>
             </div>
-            <Chat/>
         </div>
      );
 }
