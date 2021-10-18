@@ -1,23 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\snoww\\Documents\\GitHub\\BattleshipGame\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj": {}
+    "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\snoww\\Documents\\GitHub\\BattleshipGame\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj": {
+    "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\snoww\\Documents\\GitHub\\BattleshipGame\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj",
+        "projectUniqueName": "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj",
         "projectName": "BattleshipGame.DAL",
-        "projectPath": "C:\\Users\\snoww\\Documents\\GitHub\\BattleshipGame\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj",
-        "packagesPath": "C:\\Users\\snoww\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\snoww\\Documents\\GitHub\\BattleshipGame\\BattleshipGame\\BattleshipGame.DAL\\obj\\",
+        "projectPath": "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj",
+        "packagesPath": "C:\\Users\\Emil\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\snoww\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Emil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -68,7 +70,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

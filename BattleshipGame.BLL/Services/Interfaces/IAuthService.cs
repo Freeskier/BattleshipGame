@@ -6,6 +6,6 @@ namespace BattleshipGame.BLL.Services.Interfaces
     public interface IAuthService
     {
          Task<UserForAuthResponseDTO> Login(UserForLoginDTO user);
-         Task<UserForAuthResponseDTO> Register(UserForRegisterDTO user);
+         Task Register(UserForRegisterDTO user);
     }
 }

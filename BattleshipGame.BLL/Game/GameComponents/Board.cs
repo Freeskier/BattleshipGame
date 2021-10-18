@@ -10,26 +10,49 @@ namespace BattleshipGame.BLL.Game.GameModels
         const int WIDTH = 10;
         const int HEIGHT = 10;
         Random random = new Random();
-        int[,] map;
-        List<Ship> ships;
+        int[,] Map {get; set;}
+        private List<Ship> ships;
+
 
         public Board()
         {
             InitializeMap();
-            CreateSetOfShips();
         }
 
-        
+        public int[,] CreateMapForEnemy(int[,] enemyMap)
+        {
+            int[,] mapForReturn = new int[WIDTH, HEIGHT];
+            for (int i = 0; i < mapForReturn.GetLength(0); i++)
+            {
+                for (int j = 0; j < mapForReturn.GetLength(1); j++)
+                {
+                    if(Map[i,j] == (int)PointType.Ship && enemyMap[i,j] == (int)PointType.Shot)
+                        mapForReturn[i,j] = (int)PointType.ShipHit;
+                }
+            }
+            return mapForReturn;
+        }
+
+        private void ShipSunk(List<(int x, int y)> parts)
+        {
+            foreach(var i in parts)
+            {
+                Map[i.x, i.y] = (int)PointType.Sunk;
+            }
+        }
 
         private void InitializeMap()
         {
-            map = new int[WIDTH, HEIGHT];
+            Map = new int[WIDTH, HEIGHT];
             ships = new List<Ship>();
         }
 
         public void SetPoint(PointType point, int x, int y)
         {
-            map[x,y] = (int)point;
+            if(Map[x,y] == (int)point)
+                throw new Exception("Point is already set to this value.");
+
+            Map[x,y] = (int)point;
             foreach(var ship in ships)
             {
                 ship.SetPart(x, y);
@@ -41,18 +64,26 @@ namespace BattleshipGame.BLL.Game.GameModels
             get => ships.All(x => x.IsSunk);
         }
 
-        private void CreateSetOfShips()
+        public void CreateSetOfShips()
         {
-            for (int i = 0; i < 5; i++)
-            {
-                CreateShip(random.Next(2,5));
-            }
+            CreateShip(4);
+            CreateShip(3);
+            CreateShip(3);
+            CreateShip(2);
+            CreateShip(2);
+            CreateShip(2);
+            CreateShip(1);
+            CreateShip(1);
+            CreateShip(1);
+            CreateShip(1);
+
         }
 
         private void CreateShip(int size)
         {
             bool horizontalDir = RandomBool;
             Ship ship = new Ship();
+            ship.OnShipSunk += ShipSunk;
 
             int xPos = random.Next(0, 10);
             int yPos = random.Next(0, 10);
@@ -81,7 +112,7 @@ namespace BattleshipGame.BLL.Game.GameModels
 
             foreach(var p in ship.ShipParts)
             {
-                map[p.X, p.Y] = (int) PointType.Ship;
+                Map[p.X, p.Y] = (int) PointType.Ship;
             }
             ships.Add(ship);
         }
@@ -102,7 +133,7 @@ namespace BattleshipGame.BLL.Game.GameModels
                     { 
                         if(i == lastX && j == lastY)
                             continue;
-                        if(map[i, j] != 0 ) 
+                        if(Map[i, j] != 0 ) 
                             return false;
                     }
                 }
@@ -119,7 +150,7 @@ namespace BattleshipGame.BLL.Game.GameModels
             {
                 for (int j = 0; j < HEIGHT; j++)
                 {
-                    Console.Write(map[i,j] + " ");
+                    Console.Write(Map[i,j] + " ");
                 }
                 Console.WriteLine("\n");
             }

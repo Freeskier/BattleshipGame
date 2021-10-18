@@ -7,10 +7,12 @@ namespace BattleshipGame.BLL.Game.GameModels
     public class Ship
     {
         public List<PartOfShip> ShipParts {get; set;}
+        public event Action<List<(int x, int y)>> OnShipSunk;
 
         public Ship()
         {
             ShipParts = new List<PartOfShip>();
+            
         }   
 
         public void AddPart(PartOfShip part) => ShipParts.Add(part);
@@ -21,6 +23,10 @@ namespace BattleshipGame.BLL.Game.GameModels
                 if(part.X == x && part.Y == y)
                     part.Hit = true;
             }
+
+            if(IsSunk)
+                OnShipSunk?.Invoke(ShipParts.Select(p => (x = p.X, y = p.Y)).ToList());
+
         }
 
         public bool IsSunk

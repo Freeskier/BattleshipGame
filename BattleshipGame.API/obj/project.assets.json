@@ -5487,23 +5487,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\snoww\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\Emil\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\snoww\\Documents\\GitHub\\BattleshipGame\\BattleshipGame\\BattleshipGame.API\\BattleshipGame.API.csproj",
+      "projectUniqueName": "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.API\\BattleshipGame.API.csproj",
       "projectName": "BattleshipGame.API",
-      "projectPath": "C:\\Users\\snoww\\Documents\\GitHub\\BattleshipGame\\BattleshipGame\\BattleshipGame.API\\BattleshipGame.API.csproj",
-      "packagesPath": "C:\\Users\\snoww\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\snoww\\Documents\\GitHub\\BattleshipGame\\BattleshipGame\\BattleshipGame.API\\obj\\",
+      "projectPath": "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.API\\BattleshipGame.API.csproj",
+      "packagesPath": "C:\\Users\\Emil\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\snoww\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Emil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -5518,8 +5521,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\snoww\\Documents\\GitHub\\BattleshipGame\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj": {
-              "projectPath": "C:\\Users\\snoww\\Documents\\GitHub\\BattleshipGame\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj"
+            "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj": {
+              "projectPath": "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.DAL\\BattleshipGame.DAL.csproj"
             }
           }
         }
@@ -5573,7 +5576,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

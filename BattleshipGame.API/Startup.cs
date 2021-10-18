@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BattleshipGame.API.Extenstions;
+using BattleshipGame.BLL.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
+
 
 namespace BattleshipGame.API
 {
@@ -27,7 +22,13 @@ namespace BattleshipGame.API
         {
 
             services.AddControllers();
-            services.AddSignalR();
+            services.AddSignalR(opt => opt.EnableDetailedErrors = true);
+            services.AddSQL(Configuration);
+            services.AddGameModules();
+            services.AddRepositories();
+            services.AddServices();
+            services.AddJWTConfiguration(Configuration);
+            services.AddSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,15 +37,24 @@ namespace BattleshipGame.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
-
+            
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseSwagger();
+            app.UseSwaggerUI(u =>
+            {
+                u.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend");
+                u.DocumentTitle = "Title Documentation";
+                u.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<GameHub>("/gameHub");
             });
         }
     }
