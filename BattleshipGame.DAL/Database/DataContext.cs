@@ -7,6 +7,10 @@ namespace BattleshipGame.DAL.Database
     {
         public DbSet<User> Users {get; set;}
 
+        public DataContext(DbContextOptions opt) : base(opt)
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>()

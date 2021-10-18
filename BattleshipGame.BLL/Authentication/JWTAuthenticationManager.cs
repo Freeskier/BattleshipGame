@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Backend.Authentication
+namespace BattleshipGame.BLL.Authentication
 {
     public class JWTAuthenticationManager : IJWTAuthenticationManager
     {

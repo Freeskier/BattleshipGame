@@ -14,6 +14,10 @@ using BattleshipGame.BLL.Game.GameLogic.Interfaces;
 using System.Linq;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
+using System.Reflection;
+using BattleshipGame.BLL.Hubs;
+using BattleshipGame.BLL.Authentication;
+using System.Threading.Tasks;
 
 namespace BattleshipGame.API.Extenstions
 {
@@ -22,6 +26,7 @@ namespace BattleshipGame.API.Extenstions
         public static void AddJWTConfiguration(this IServiceCollection service, IConfiguration configuration)
         {
             var key = "this_is_my_service_key";
+            service.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(key));
 
             service.AddAuthentication(x =>
             {
@@ -38,6 +43,7 @@ namespace BattleshipGame.API.Extenstions
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+                
             }
             );
         }
@@ -60,13 +66,12 @@ namespace BattleshipGame.API.Extenstions
             service.AddSingleton<IRoomManager, RoomManager>();
         }
 
-
-
         public static void AddSQL(this IServiceCollection service, IConfiguration configuration)
         {
             string connectionString = configuration.GetConnectionString("DefaultConnection");
             service.AddDbContext<DataContext>(opt => opt.UseSqlServer(connectionString));
         }
+
 
         public static void AddSwagger(this IServiceCollection service)
         {
@@ -77,6 +82,8 @@ namespace BattleshipGame.API.Extenstions
                     Title = "Backend",
                     Version = "v1"
                 });
+
+
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -87,6 +94,8 @@ namespace BattleshipGame.API.Extenstions
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
                 });
+
+                
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement()
                     {
                         {

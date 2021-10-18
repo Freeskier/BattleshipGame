@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace BattleshipGame.BLL.Hubs
 {
-    [Authorize]
     public class GameHub : Hub<IGameHub>
     {
   
@@ -28,25 +27,6 @@ namespace BattleshipGame.BLL.Hubs
         {
 
         }
-        public override async Task OnConnectedAsync()
-        {
-            lock(_roomManager)
-            {
-                _roomManager.ConnectedUsers.Add(Context.ConnectionId, Context.User.Identity.Name);
-            }
-            await base.OnConnectedAsync();
-        }
-
-        public override async Task OnDisconnectedAsync(Exception exception)
-        {
-            lock(_roomManager)
-            {
-                _roomManager.ConnectedUsers.Remove(Context.ConnectionId);
-            }
-            await base.OnDisconnectedAsync(exception);
-        }
-
-        
 
     }
 }

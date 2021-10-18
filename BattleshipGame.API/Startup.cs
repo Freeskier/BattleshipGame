@@ -1,5 +1,8 @@
+using System;
 using BattleshipGame.API.Extenstions;
+using BattleshipGame.BLL.Helpers;
 using BattleshipGame.BLL.Hubs;
+using BattleshipGame.DAL.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,13 +23,13 @@ namespace BattleshipGame.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
-            services.AddSignalR(opt => opt.EnableDetailedErrors = true);
             services.AddSQL(Configuration);
+            services.AddControllers();
+            services.AddAutoMapper(x => x.AddProfile<AutoMapperProfile>());
+            services.AddSignalR(opt => opt.EnableDetailedErrors = true);
             services.AddGameModules();
-            services.AddRepositories();
             services.AddServices();
+            services.AddRepositories();
             services.AddJWTConfiguration(Configuration);
             services.AddSwagger();
         }
@@ -38,7 +41,12 @@ namespace BattleshipGame.API
                 app.UseDeveloperExceptionPage();
             }
             
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(options =>
+            {
+                options.AllowAnyHeader()
+                .WithOrigins("http://localhost:3000")
+                .AllowCredentials();
+            });
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -56,6 +64,12 @@ namespace BattleshipGame.API
                 endpoints.MapHub<ChatHub>("/chatHub");
                 endpoints.MapHub<GameHub>("/gameHub");
             });
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
+                context.Database.EnsureCreated();
+            }
         }
     }
 }

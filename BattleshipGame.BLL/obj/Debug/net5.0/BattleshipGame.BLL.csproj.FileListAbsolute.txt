@@ -1,0 +1,15 @@
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\bin\Debug\net5.0\BattleshipGame.BLL.deps.json
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\bin\Debug\net5.0\BattleshipGame.BLL.dll
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\bin\Debug\net5.0\ref\BattleshipGame.BLL.dll
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\bin\Debug\net5.0\BattleshipGame.BLL.pdb
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\bin\Debug\net5.0\BattleshipGame.DAL.dll
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\bin\Debug\net5.0\BattleshipGame.DAL.pdb
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\obj\Debug\net5.0\BattleshipGame.BLL.csprojAssemblyReference.cache
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\obj\Debug\net5.0\BattleshipGame.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\obj\Debug\net5.0\BattleshipGame.BLL.AssemblyInfoInputs.cache
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\obj\Debug\net5.0\BattleshipGame.BLL.AssemblyInfo.cs
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\obj\Debug\net5.0\BattleshipGame.BLL.csproj.CoreCompileInputs.cache
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\obj\Debug\net5.0\BattleshipGame.BLL.csproj.CopyComplete
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\obj\Debug\net5.0\BattleshipGame.BLL.dll
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\obj\Debug\net5.0\ref\BattleshipGame.BLL.dll
+C:\Users\Emil\Desktop\BattleshipGame\BattleshipGame.BLL\obj\Debug\net5.0\BattleshipGame.BLL.pdb

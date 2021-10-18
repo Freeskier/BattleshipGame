@@ -1,4 +1,4 @@
-namespace Backend.Authentication
+namespace BattleshipGame.BLL.Authentication
 {
     public interface IJWTAuthenticationManager
     {

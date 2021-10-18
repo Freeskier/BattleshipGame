@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
-using Backend.Authentication;
+using BattleshipGame.BLL.Authentication;
 using BattleshipGame.BLL.DTOs;
 using BattleshipGame.BLL.Services.Interfaces;
 using BattleshipGame.DAL.Entities;
@@ -27,9 +27,8 @@ namespace BattleshipGame.BLL.Services
             var usr = await _userRepository.GetByLogin(user.Login);
             if(usr == null)
                 throw new Exception("User with given login does not exist.");
-            if(!usr.Password.Equals(user.Password))
-                throw new Exception("Invalid password.");
-            if(!await VerifyPasswordHash(user.Password, usr.Password, usr.PasswordSalt))
+
+            if(!await VerifyPasswordHash(user.Password, usr.PasswordHash, usr.PasswordSalt))
                 throw new Exception("Authorization problem.");
 
             var responseUser = _mapper.Map<UserForAuthResponseDTO>(usr);
@@ -44,10 +43,10 @@ namespace BattleshipGame.BLL.Services
             if(usr != null)
                 throw new Exception("User with given login already exists.");
             
+            var userToReg = _mapper.Map<User>(user);
             var (hash, salt) = await CreatePasswordHash(user.Password);
-            var userToReg = _mapper.Map<User>(usr);
             userToReg.PasswordSalt = salt;
-            userToReg.Password = hash;
+            userToReg.PasswordHash = hash;
             await _userRepository.AddAsync(userToReg);
             await _userRepository.SaveAsync();
         }
@@ -67,7 +66,7 @@ namespace BattleshipGame.BLL.Services
 
         private async Task<(byte[] hash, byte[] salt)> CreatePasswordHash(string password)
         {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            using (var hmac = new System.Security.Cryptography.HMACSHA256())
             {
                 var passwordSalt = hmac.Key;
                 var passwordHash = await hmac.ComputeHashAsync(new MemoryStream(System.Text.Encoding.UTF8.GetBytes(password)));

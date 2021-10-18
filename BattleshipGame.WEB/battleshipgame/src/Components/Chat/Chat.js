@@ -1,17 +1,42 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import './Chat.css'
 import Lobby from './Lobby';
 import Message from './Message';
+import { HubConnectionBuilder } from '@microsoft/signalr';
+
 
 function Chat() {
-
-    const messagesEndRef = useRef(null)
+    const messagesEndRef = useRef(null);
+    const [connection, setConnection] = useState(null);
+    const [chat, setChat] = useState([]);
 
     const scrollToBottom = () => {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
     }
 
     useEffect(scrollToBottom, []); 
+
+    useEffect(() => {
+        const newConnection = new HubConnectionBuilder()
+            .withUrl('http://localhost:5000/chatHub', { accessTokenFactory: () => "" })
+            .withAutomaticReconnect()
+            .build();
+        setConnection(newConnection);
+    }, []);
+
+    useEffect(() => {
+        if (connection) {
+            connection.start()
+                .then(result => {
+                    console.log('Connected!');
+    
+                    connection.on('ReceiveMessage', message => {
+
+                    });
+                })
+                .catch(e => console.log('Connection failed: ', e));
+        }
+    }, [connection]);
 
     const messages =[
         {user:'Kazik', date: '21-03-2323', text: "asdsadas"},

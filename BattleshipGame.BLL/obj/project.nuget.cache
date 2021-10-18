@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "l3999bn1oVrq85acGOIpvqv1Ctsp8smrhWUjNK0VhKQY1IYbgJkogxVlDaUD9nE0JwYlQkY/NqUD0M+L7LW9sQ==",
+  "dgSpecHash": "dT2KtvwhIZ6FI+w3GrfFYM2b1q4+8BkD71qocTPcsvXxwQg1/Ibsc+R1eB8Dybvie7CKWA+E4Q2ZjTGHBhgwYA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.BLL\\BattleshipGame.BLL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Emil\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\Emil\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\Emil\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.11\\microsoft.aspnetcore.authentication.jwtbearer.5.0.11.nupkg.sha512",
     "C:\\Users\\Emil\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.2.0\\microsoft.aspnetcore.authorization.2.2.0.nupkg.sha512",
     "C:\\Users\\Emil\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\2.2.0\\microsoft.aspnetcore.connections.abstractions.2.2.0.nupkg.sha512",
