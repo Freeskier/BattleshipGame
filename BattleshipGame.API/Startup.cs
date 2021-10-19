@@ -61,8 +61,8 @@ namespace BattleshipGame.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<ChatHub>("/chatHub");
-                endpoints.MapHub<GameHub>("/gameHub");
+                endpoints.MapHub<ChatHub>("/hub/chat");
+                endpoints.MapHub<GameHub>("/hub/game");
             });
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())

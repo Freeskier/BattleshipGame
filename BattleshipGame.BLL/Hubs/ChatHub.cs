@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using BattleshipGame.BLL.Game.GameLogic.Interfaces;
+using BattleshipGame.BLL.Hubs.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
@@ -16,6 +17,12 @@ namespace BattleshipGame.BLL.Hubs
         {
             _roomManager = roomManager;
         }
+
+        public async Task SendMessage(MessageModel model)
+        {
+            await Clients.All.RecieveMessage(model);
+        }
+
         public override async Task OnConnectedAsync()
         {
             lock(_roomManager)

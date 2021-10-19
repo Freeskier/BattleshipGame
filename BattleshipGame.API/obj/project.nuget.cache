@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "SMjbLeNTi2im8+z48zgrqxXjEn4L8imK/jYRc7LUeJls764oW2VlL2EttN6JoWQe7Vhr6LvmYKx1Owd/E7WeGg==",
+  "dgSpecHash": "BMXgoV9nzu8PLU57GINHGwwAty7WAEVoxvPCZGJAUOLanxD6Hs/TpuXPWXrP5XpOun3kpL3u8wMqgI2vQJxQhw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Emil\\Desktop\\BattleshipGame\\BattleshipGame.API\\BattleshipGame.API.csproj",
   "expectedPackageFiles": [
@@ -44,10 +44,9 @@
     "C:\\Users\\Emil\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\Emil\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
     "C:\\Users\\Emil\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
-    "C:\\Users\\Emil\\.nuget\\packages\\signalrswaggergen\\2.3.0\\signalrswaggergen.2.3.0.nupkg.sha512",
     "C:\\Users\\Emil\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
-    "C:\\Users\\Emil\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.1.4\\swashbuckle.aspnetcore.swagger.6.1.4.nupkg.sha512",
-    "C:\\Users\\Emil\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.1.4\\swashbuckle.aspnetcore.swaggergen.6.1.4.nupkg.sha512",
+    "C:\\Users\\Emil\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\Emil\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
     "C:\\Users\\Emil\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512",
     "C:\\Users\\Emil\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\Emil\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",

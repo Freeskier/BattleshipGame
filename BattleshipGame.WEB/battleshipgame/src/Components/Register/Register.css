@@ -34,5 +34,10 @@
     text-decoration: underline;
     transition: all 1000ms ease-in-out;
   }
+
+  .input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
   
  

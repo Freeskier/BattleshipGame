@@ -43,7 +43,19 @@ namespace BattleshipGame.API.Extenstions
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
-                
+                x.Events = new JwtBearerEvents 
+                    {
+                        OnMessageReceived = context => {
+                            var accessToken = context.Request.Query["access_token"];
+                            var paths = context.HttpContext.Request.Path;
+                            if(!string.IsNullOrEmpty(accessToken) && paths.StartsWithSegments("/hub"))
+                            {
+                                context.Token = accessToken;
+                            }
+
+                            return Task.CompletedTask;
+                        }
+                    };
             }
             );
         }

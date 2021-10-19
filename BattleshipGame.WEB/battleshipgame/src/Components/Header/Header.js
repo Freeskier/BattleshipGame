@@ -4,8 +4,19 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {FiLogOut} from 'react-icons/fi';
 import {IconContext} from "react-icons"
+import { toast } from "react-toastify";
+import {useHistory} from 'react-router-dom'
 
-function Header({username, onLogout}) {
+function Header({username, setUsername}) {
+    let history = useHistory();
+
+    function onLogout(){
+        history.push('/login');
+        setUsername('');
+        localStorage.clear();
+        toast.info('See you :)');
+    }
+
     return ( 
         <div className='container'>
             <div className='header-container'>
@@ -16,7 +27,6 @@ function Header({username, onLogout}) {
                         <FiLogOut />
                     </IconContext.Provider>
                     <label className='profile-text'>{username}</label>
-                
                 </div>
                 :<div/>}
             </div>
