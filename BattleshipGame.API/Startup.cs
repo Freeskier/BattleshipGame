@@ -45,6 +45,8 @@ namespace BattleshipGame.API
             {
                 options.AllowAnyHeader()
                 .WithOrigins("http://localhost:3000")
+                .WithOrigins("https://localhost:3000")
+                .AllowAnyMethod()
                 .AllowCredentials();
             });
             app.UseRouting();

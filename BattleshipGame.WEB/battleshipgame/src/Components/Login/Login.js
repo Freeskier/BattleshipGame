@@ -5,11 +5,11 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
 
-function Login({setName}) {
+function Login({setName, setIsAuth}) {
     let history = useHistory();
     const[login, setLogin] = useState('');
     const[password, setPassword] = useState('');
-    const URL = 'https://localhost:5001/api/Auth/';
+    const URL = 'http://localhost:5000/api/Auth/';
 
 
     function onLoginClick() {
@@ -23,6 +23,7 @@ function Login({setName}) {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('login', response.data.login);
             setName(response.data.login);
+            setIsAuth(true);
             history.push('/game');
         }).catch(error =>{
             if(typeof(error?.response?.data) !== 'undefined')

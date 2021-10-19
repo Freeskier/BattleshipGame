@@ -8,12 +8,16 @@ import { toast } from 'react-toastify';
 
 
 
-function Chat() {
+function Chat({sendChallenge}) {
     let history = useHistory();
     const messagesEndRef = useRef(null);
     const [connection, setConnection] = useState(null);
     const [chat, setChat] = useState([]);
+    const [loggedUsers, setLoggedUsers] = useState([]);
     const [messageInput, setMessageInput] = useState('');
+    const latestChat = useRef(null);
+
+    latestChat.current = chat;
 
     const scrollToBottom = () => {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
@@ -28,36 +32,48 @@ function Chat() {
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:5001/hub/chat', { accessTokenFactory: () => localStorage.getItem('token') })
+            .withUrl('http://localhost:5000/hub/chat', { accessTokenFactory: () => localStorage.getItem('token') })
             .withAutomaticReconnect()
             .build();
         setConnection(newConnection);
     }, []);
 
     useEffect(() => {
+        let unmounted = false;
         if (connection) {
             connection.start()
             .then(result => {    
                 connection.on('ReceiveMessage', message => {
-                        console.log(chat);
-                        const newChat = chat;
+                        const newChat = [...latestChat.current];
                         newChat.push(message);
-                        setChat(newChat);
+                        if(!unmounted) 
+                            setChat(newChat);
+                        scrollToBottom();
                     });
-                })
+
+                connection.on('LoggedUsers', resp => {
+                    if(!unmounted)
+                        setLoggedUsers(resp);
+                });
+            })
                 .catch(e => {
                     if(e.statusCode === 401)
                     {
-                        toast.error('Authentication problem.')
+                        toast.error('Authentication failed.')
                         history.push('/');
                         localStorage.clear();
                     }
                 }
             );
         }
-    }, [connection]);
+        return () => unmounted = true;
+    }, [connection, history]);
 
     const sendMessage = async (user, message) => {
+        if(message === '') {
+            toast.warn("Can't send empty message.");
+            return;
+        }
         const chatMessage = {
             user: user,
             text: message,
@@ -67,6 +83,7 @@ function Chat() {
             if (connection.connectionStarted) {
                 try {
                     await connection.send('SendMessage', chatMessage);
+                    setMessageInput('');
                 }
                 catch(e) {
                     toast.error(e);
@@ -77,18 +94,6 @@ function Chat() {
             toast.error("No connection to server.");
         }
     }
-
-    const messages =[
-        {user:'Kazik', date: '21-03-2323', text: "asdsadas"},
-        {user:'Julek', date: '21-03-2323', text: "asdxzc"},
-        {user:'Sylwia', date:'21-03-2323', text: "xczczxczxczxczx"},
-        {user:'Kazik', date: '21-03-2323', text: "asdsadas"},
-        {user:'Julek', date: '21-03-2323', text: "asdxzc"},
-        {user:'Sylwia', date:'21-03-2323', text: "xczczxczxczxczx"},
-        {user:'Kazik', date: '21-03-2323', text: "asdsadas"},
-        {user:'Julek', date: '21-03-2323', text: "asdxzc"},
-        {user:'Sylwia', date:'21-03-2323', text: "xczczxczxczxczx"},
-    ];
 
     const mappedMessages = chat.map(
         (val) => <Message 
@@ -113,7 +118,7 @@ function Chat() {
                             Send</button>
                 </div>
             </div>
-            <Lobby/>
+            <Lobby loggedUsers={loggedUsers} sendChallenge={sendChallenge} />
         </div>
      );
 }

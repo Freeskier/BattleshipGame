@@ -6,6 +6,8 @@ namespace BattleshipGame.BLL.Game.GameModels
     {
         public string ID {get; set;}
         public DateTime CreationDate {get; set;}
+        public Player PlayerA {get; set;}
+        public Player PlayerB {get; set;}
 
         public Room()
         {

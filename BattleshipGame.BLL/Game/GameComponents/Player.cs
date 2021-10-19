@@ -4,12 +4,18 @@ namespace BattleshipGame.BLL.Game.GameModels
 {
     public class Player
     {
-        public string ID {get; set;}
+        public string ConnectionID {get; set;}
+        public string Username {get; set;}
         public Board Board {get; set;}
 
         public Player(string connectionID)
         {
-            ID = connectionID;
+            ConnectionID = connectionID;
+        }
+
+        public Player()
+        {
+            
         }
     }
 }

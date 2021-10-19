@@ -5,7 +5,10 @@ namespace BattleshipGame.BLL.Hubs
 {
     public interface IGameHub
     {
-        Task ChallengeUser(ChallengeUserModel model);
+        Task SendChallenge(ChallengeUserModel model);
         Task ChallengeUserCallback(ChallengeUserModel model);
+        Task AcceptChallenge(ChallengeUserModel model);
+        Task StartGame(StartGameModel model);
+        Task MoveResponse(MoveResponseModel model);
     }
 }

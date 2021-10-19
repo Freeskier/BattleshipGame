@@ -11,7 +11,7 @@ function Register() {
     const[password, setPassword] = useState('');
     const[confirmPassword, setConfirmPassword] = useState('');
     const[email, setEmail] = useState('');
-    const URL = 'https://localhost:5001/api/Auth/';
+    const URL = 'http://localhost:5000/api/Auth/';
 
 
     function onRegisterClick() {
