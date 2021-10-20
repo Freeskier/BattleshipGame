@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Board.css';
 import Square from './Square';
 
-function Board({isDisabled}) {
+function Board({isDisabled, isEnemy, onSquareClick, data}) {
 
 
     const squaresData = [
@@ -18,24 +18,7 @@ function Board({isDisabled}) {
         [9, 'I'],
         [10, 'J']];
 
-    const exampleData = [
-        [0, 1, 2, 3, 2, 1, 0, 0, 1, 3],
-        [0, 1, 2, 3, 2, 1, 1, 0, 1, 3],
-        [0, 1, 2, 2, 2, 1, 0, 0, 1, 3],
-        [0, 1, 2, 3, 2, 1, 0, 0, 1, 3],
-        [0, 1, 2, 3, 2, 1, 2, 3, 1, 3],
-        [0, 0, 2, 0, 2, 1, 0, 0, 1, 3],
-        [0, 1, 2, 3, 2, 1, 0, 0, 1, 3],
-        [0, 1, 2, 3, 2, 1, 0, 2, 1, 3],
-        [0, 1, 0, 3, 2, 1, 0, 0, 1, 3],
-        [0, 1, 2, 3, 2, 1, 0, 0, 1, 3]
-    ];
-
     
-
-    function onSquareClick(x, y) {
-        console.log(x)
-    }
 
     const mergedData = squaresData.map(
         (square, index) => {
@@ -55,8 +38,9 @@ function Board({isDisabled}) {
                         className='outter-grid-item'>{squaresData[index2][1]}</div>
                     return <Square x={index - 1} y={index2 - 1} 
                         onClick={onSquareClick} 
-                        type={exampleData[index-1][index2-1]}
-                        key = {Math.random() * Date.now()}/>
+                        type={data[index-1][index2-1]}
+                        key = {Math.random() * Date.now()}
+                        isEnemy={isEnemy}/>
                 }
             )
         }

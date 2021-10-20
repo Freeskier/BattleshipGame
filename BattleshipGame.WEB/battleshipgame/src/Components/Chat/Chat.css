@@ -76,6 +76,7 @@ p {
     border: 1px solid rgb(190, 190, 190);
     border-radius: 15px;
     margin: 10px;
+    min-width: 600px;
 }
 
 .lobby-container {
@@ -86,6 +87,20 @@ p {
     padding-top: 10px;
     padding-bottom: 10px;
     width: 100%;
+    
+}
+
+.lobby-list-container {
+    max-height: 350px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.lobby-list-container::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    background-color: transparent;
 }
 
 .lobby-user {
@@ -96,6 +111,7 @@ p {
     border-bottom: 1px solid rgba(76, 177, 235, 0.719);
     padding-top: 5px;
     padding-bottom: 5px;
+    
 }
 
 .lobby-user:hover {

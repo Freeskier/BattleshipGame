@@ -12,7 +12,7 @@ namespace BattleshipGame.BLL.Game.GameModels
         public Room()
         {
             CreationDate = DateTime.Now;
-            ID = new Guid().ToString();
+            ID = Guid.NewGuid().ToString();
         }
     }
 }

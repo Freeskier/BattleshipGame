@@ -74,7 +74,7 @@ namespace BattleshipGame.API.Extenstions
 
         public static void AddGameModules(this IServiceCollection service)
         {
-            service.AddSingleton<IGameAI, GameAI>();
+            service.AddTransient<IGameAI, GameAI>();
             service.AddSingleton<IRoomManager, RoomManager>();
         }
 

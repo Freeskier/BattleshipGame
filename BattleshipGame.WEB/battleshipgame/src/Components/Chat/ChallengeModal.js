@@ -10,14 +10,14 @@ Modal.setAppElement('#root');
 function ChallengeModal({isOpen, setOpen, user, sendChallenge, isItResponse}) {
 
     const [remainingTime, setReminingTime] = useState(1000);
-
+    const [aPlay, setAPlay] = useState(false);
 
     function toggleModal() {
         setOpen(false);
     }
 
     function accept() {
-        sendChallenge(user);
+        sendChallenge(user, aPlay);
         setOpen(false);
     }
 
@@ -59,12 +59,14 @@ function ChallengeModal({isOpen, setOpen, user, sendChallenge, isItResponse}) {
                         <h3>{user} invites you to play/</h3>}
                     <p>Remaining time: {remainingTime}s...</p>
                 </div>
+                <div className='checkbox'> 
+                    <input id='checkbox' type="checkbox" defaultChecked={aPlay} onChange={() => setAPlay(aPlay => !aPlay)}/>
+                    <label htmlFor='checkbox'>Auto play</label>
+                </div>
                 <IconContext.Provider value={{style: {fontSize: '25px', color: "rgb(255, 255, 255)", position: 'relative', top:'4px'}}}> 
                     <button className='red-button' onClick={toggleModal}><FaTimes/></button>
                     <button className='green-button' onClick={() => accept()}><FaCheck/></button>
                 </IconContext.Provider>
-                <input
-                    type="checkbox" className='checkbox'/>
             </Modal>
         </div>
      );

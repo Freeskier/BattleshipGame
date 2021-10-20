@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleshipGame.BLL.Game.Enums;
+using BattleshipGame.BLL.Hubs.Models;
 
 namespace BattleshipGame.BLL.Game.GameModels
 {
@@ -10,24 +11,62 @@ namespace BattleshipGame.BLL.Game.GameModels
         const int WIDTH = 10;
         const int HEIGHT = 10;
         Random random = new Random();
-        int[,] Map {get; set;}
+        public int[,] ShipsMap {get; set;}
+        public int[,] ShotsMap {get; set;}
         private List<Ship> ships;
 
 
         public Board()
         {
             InitializeMap();
+            CreateSetOfShips();
         }
 
-        public int[,] CreateMapForEnemy(int[,] enemyMap)
+        public int[,] ReturnMapForEnemy(Board enemyBoard)
         {
             int[,] mapForReturn = new int[WIDTH, HEIGHT];
             for (int i = 0; i < mapForReturn.GetLength(0); i++)
             {
                 for (int j = 0; j < mapForReturn.GetLength(1); j++)
                 {
-                    if(Map[i,j] == (int)PointType.Ship && enemyMap[i,j] == (int)PointType.Shot)
-                        mapForReturn[i,j] = (int)PointType.ShipHit;
+                    if(enemyBoard.ShotsMap[i,j] == (int)PointType.Shot)
+                    {
+                        mapForReturn[i,j] = (int)PointType.Shot;
+                        if(ShipsMap[i,j] == (int)PointType.Ship)
+                            mapForReturn[i,j] = (int) PointType.ShipHit;
+                        if(ships.Any(s => s.IsSunk && s.ShipParts.Any(p => p.X == i && p.Y == j)))
+                            mapForReturn[i,j] = (int)PointType.Sunk;
+                    }
+                }
+            }
+            return mapForReturn;
+        }
+
+        public IEnumerable<ShipStatsModel> ReturnShipStats()
+        {
+            return ships.Select(s => new ShipStatsModel 
+            {
+                Size = s.ShipParts.Count,
+                HitCount = s.ShipParts.Count(q => q.Hit)
+            });
+        }
+
+        public int[,] ReturnMapForMe(Board enemyBoard)
+        {
+            int[,] mapForReturn = new int[WIDTH, HEIGHT];
+            for (int i = 0; i < mapForReturn.GetLength(0); i++)
+            {
+                for (int j = 0; j < mapForReturn.GetLength(1); j++)
+                {
+                    mapForReturn[i,j] = ShipsMap[i,j];
+                    if(enemyBoard.ShotsMap[i,j] == (int)PointType.Shot)
+                    {
+                        mapForReturn[i,j] = (int)PointType.Shot;
+                        if(ShipsMap[i,j] == (int)PointType.Ship)
+                            mapForReturn[i,j] = (int) PointType.ShipHit;
+                        if(ships.Any(s => s.IsSunk && s.ShipParts.Any(p => p.X == i && p.Y == j)))
+                            mapForReturn[i,j] = (int)PointType.Sunk;
+                    }
                 }
             }
             return mapForReturn;
@@ -37,26 +76,31 @@ namespace BattleshipGame.BLL.Game.GameModels
         {
             foreach(var i in parts)
             {
-                Map[i.x, i.y] = (int)PointType.Sunk;
+                ShipsMap[i.x, i.y] = (int)PointType.Sunk;
             }
         }
 
         private void InitializeMap()
         {
-            Map = new int[WIDTH, HEIGHT];
+            ShipsMap = new int[WIDTH, HEIGHT];
+            ShotsMap = new int[WIDTH, HEIGHT];
             ships = new List<Ship>();
         }
 
-        public void SetPoint(PointType point, int x, int y)
+        public bool SetPoint(PointType point, int x, int y)
         {
-            if(Map[x,y] == (int)point)
-                throw new Exception("Point is already set to this value.");
+            if(ShotsMap[x,y] == (int)point)
+                throw new Exception($"Point x: {x} y: {y} is already set to given value.");
 
-            Map[x,y] = (int)point;
+            ShotsMap[x,y] = (int)point;
             foreach(var ship in ships)
             {
                 ship.SetPart(x, y);
             }
+            if(ShipsMap[x,y] == (int)PointType.Ship || ShipsMap[x,y] == (int)PointType.Sunk)
+                return true;
+            else 
+                return false;
         }
 
         public bool IsGameOver
@@ -112,7 +156,7 @@ namespace BattleshipGame.BLL.Game.GameModels
 
             foreach(var p in ship.ShipParts)
             {
-                Map[p.X, p.Y] = (int) PointType.Ship;
+                ShipsMap[p.X, p.Y] = (int) PointType.Ship;
             }
             ships.Add(ship);
         }
@@ -133,7 +177,7 @@ namespace BattleshipGame.BLL.Game.GameModels
                     { 
                         if(i == lastX && j == lastY)
                             continue;
-                        if(Map[i, j] != 0 ) 
+                        if(ShipsMap[i, j] != 0 ) 
                             return false;
                     }
                 }
@@ -141,8 +185,8 @@ namespace BattleshipGame.BLL.Game.GameModels
             return true;
         }
 
-        private bool RandomBool => random.Next(0,10) > 5;
-        private int Direction => random.Next(0, 10) > 5? 1 : -1;
+        private bool RandomBool => random.Next(0,10) >= 5;
+        private int Direction => random.Next(0, 10) >= 5? 1 : -1;
 
         public void Print()
         {
@@ -150,7 +194,7 @@ namespace BattleshipGame.BLL.Game.GameModels
             {
                 for (int j = 0; j < HEIGHT; j++)
                 {
-                    Console.Write(Map[i,j] + " ");
+                    Console.Write(ShipsMap[i,j] + " ");
                 }
                 Console.WriteLine("\n");
             }

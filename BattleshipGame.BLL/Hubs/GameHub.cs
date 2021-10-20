@@ -29,16 +29,22 @@ namespace BattleshipGame.BLL.Hubs
         public async Task AcceptChallenge(ChallengeUserModel model)
         {
             var roomID = _roomManager.CreateRoom(model.FromUser, model.ToUser, out string playerAconnID, out string playerBconnID);
-            await Clients.Clients(playerAconnID, playerBconnID).StartGame(new StartGameModel {
+            await Clients.All.StartGame(new StartGameModel {
                 RoomID = roomID,
                 StartingUserConnID = playerAconnID
             });
+
+            _roomManager.GetMoveResponseData(roomID, Context.ConnectionId, false, out MoveResponseModel respA, out MoveResponseModel respB);
+            await Clients.Client(playerBconnID).MoveResponse(respB);
+            await Clients.Client(Context.ConnectionId).MoveResponse(respA);
         }
 
         public async Task MakeMove(MoveModel model)
         {
-            var response = _roomManager.ProcessMove(model, Context.ConnectionId, out string enemyConnID);
-            await Clients.Client(enemyConnID).MoveResponse(response);
+            var extraMove = _roomManager.ProcessMove(model, Context.ConnectionId, out string enemyConnID);
+            _roomManager.GetMoveResponseData(model.RoomID, Context.ConnectionId, extraMove, out MoveResponseModel respA, out MoveResponseModel respB);
+            await Clients.Client(enemyConnID).MoveResponse(respB);
+            await Clients.Client(Context.ConnectionId).MoveResponse(respA);
         }
 
 
@@ -47,6 +53,7 @@ namespace BattleshipGame.BLL.Hubs
             lock(_roomManager)
             {
                 _roomManager.AddUserToConnected(Context.ConnectionId, Context.User.Identity.Name);
+                Console.WriteLine(Context.User.Identity.Name);
             }
             await base.OnConnectedAsync();
         }
@@ -55,7 +62,8 @@ namespace BattleshipGame.BLL.Hubs
         {
             lock(_roomManager)
             {
-                _roomManager.ConnectedUsers.Remove(Context.ConnectionId);
+                _roomManager.RemoveUserFromConnected(Context.ConnectionId);
+                Console.WriteLine("discon " + Context.User.Identity.Name);
             }
             await base.OnDisconnectedAsync(exception);
         }

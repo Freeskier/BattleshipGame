@@ -42,7 +42,9 @@ function Lobby({loggedUsers, sendChallenge}) {
     return ( 
         <div className='lobby-container'>
             <h2>Lobby</h2>
-            {mappedData}
+            <div className='lobby-list-container'>
+                {mappedData}    
+            </div>
             <ChallengeModal isOpen={openModal} setOpen={setOpenModal} 
                 user={selectedUser} sendChallenge={sendChallenge}
                 isItResponse={false}/>
