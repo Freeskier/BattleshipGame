@@ -66,7 +66,13 @@ function Chat({sendChallenge}) {
                 }
             );
         }
-        return () => unmounted = true;
+        return () => 
+        {
+            if (connection) {
+                connection.stop();
+            }
+            unmounted = true;
+        }
     }, [connection, history]);
 
     const sendMessage = async (user, message) => {

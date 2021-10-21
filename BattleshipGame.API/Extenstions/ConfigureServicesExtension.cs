@@ -18,6 +18,7 @@ using System.Reflection;
 using BattleshipGame.BLL.Hubs;
 using BattleshipGame.BLL.Authentication;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 
 namespace BattleshipGame.API.Extenstions
 {
@@ -74,8 +75,9 @@ namespace BattleshipGame.API.Extenstions
 
         public static void AddGameModules(this IServiceCollection service)
         {
-            service.AddTransient<IGameAI, GameAI>();
+            service.AddSingleton<IGameAI, GameAI>();
             service.AddSingleton<IRoomManager, RoomManager>();
+            service.AddSingleton<ILobbyManager, LobbyManager>();
         }
 
         public static void AddSQL(this IServiceCollection service, IConfiguration configuration)

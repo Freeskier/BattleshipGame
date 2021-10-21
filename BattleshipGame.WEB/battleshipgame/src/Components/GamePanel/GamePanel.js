@@ -82,7 +82,13 @@ function GamePanel() {
                 }
             );
         }
-        return () => unmounted = true;
+        return () => 
+        {
+            if (connection) {
+                connection.stop();
+            }
+            unmounted = true;
+        }
     }, [connection]);
     
 

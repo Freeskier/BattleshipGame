@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import GamePanel from './Components/GamePanel/GamePanel';
 import Header from './Components/Header/Header';
@@ -16,6 +16,10 @@ import {
 function App() {
   const [username, setUsername] = useState('');
   const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    localStorage.clear();
+  },[]);
 
     return (
       <div>

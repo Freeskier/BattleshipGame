@@ -11,49 +11,26 @@ namespace BattleshipGame.BLL.Game.GameLogic
 {
     public class RoomManager : IRoomManager
     {
-        public Dictionary<string, string> ConnectedUsers {get; set;}
         public Dictionary<string, Room> Rooms {get; set;}
         private readonly IGameAI _gameAI;
 
         public RoomManager(IGameAI gameAI)
         {
             _gameAI = gameAI;
-            ConnectedUsers = new Dictionary<string, string>();
             Rooms = new Dictionary<string, Room>();
-            ConnectedUsers.Add("asdasd", "BOT");
+            //ConnectedUsers.Add("asdasd", "BOT");
             Rooms.Add("asdasdasd", new Room(){PlayerB = new Player{Username = "BOT", ConnectionID = "123"}});
         }
 
-        public IEnumerable<LoggedUserModel> GetLoggedUsers()
-        {
-            return ConnectedUsers.Select(u => new LoggedUserModel 
-            {
-                Username = u.Value,
-                InGame = Rooms.Any(x => x.Value.PlayerA?.Username == u.Value || x.Value.PlayerB?.Username == u.Value)
-            });
-        }
 
-        public void AddUserToConnected(string connectionID, string username)
-        {
-            ConnectedUsers.Add(connectionID, username);
-        }
-        public void RemoveUserFromConnected(string connectionID)
-        {
-            ConnectedUsers.Remove(connectionID);
-        }
 
-        public string GetUserConnectionID(string username)
-            => ConnectedUsers.FirstOrDefault(x => x.Value == username).Key;
-
-        public string CreateRoom(string userA, string userB, out string playerAconnID, out string playerBconnID)
+        public string CreateRoom(string userAConnID, string userBConnID, string userA, string userB)
         {
             var room = new Room {
-                PlayerA = new Player(GetUserConnectionID(userA), userA),
-                PlayerB = new Player(GetUserConnectionID(userB), userB)
+                PlayerA = new Player(userAConnID, userA),
+                PlayerB = new Player(userBConnID, userB)
             };
             Rooms.Add(room.ID, room);
-            playerAconnID = room.PlayerA.ConnectionID;
-            playerBconnID = room.PlayerB.ConnectionID;
             return room.ID;
         }
 

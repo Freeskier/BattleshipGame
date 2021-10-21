@@ -12,10 +12,12 @@ namespace BattleshipGame.BLL.Hubs
     public class ChatHub : Hub<IChatHub>
     {
         public readonly IRoomManager _roomManager;
-        
-        public ChatHub(IRoomManager roomManager)
+        public readonly ILobbyManager _lobbyManager;
+
+        public ChatHub(IRoomManager roomManager, ILobbyManager lobbyManager)
         {
             _roomManager = roomManager;
+            _lobbyManager = lobbyManager;
         }
 
         public async Task SendMessage(MessageModel model)
@@ -24,23 +26,26 @@ namespace BattleshipGame.BLL.Hubs
         }
 
         public async Task LoggedUsers()
+        {   
+            await Clients.All.LoggedUsers(_lobbyManager.GetLoggedUsers());
+        }
+
+        public async Task Disconnect()
         {
-            dynamic users;
-            lock(_roomManager)
-            {
-                users = _roomManager.GetLoggedUsers();
-            }
-            await Clients.All.LoggedUsers(users);
+            Context.Abort();
+            await LoggedUsers();
         }
 
         public override async Task OnConnectedAsync()
         {
+            _lobbyManager.JoinLobby(Context.User.Identity.Name, Context.ConnectionId);
             await LoggedUsers();
             await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
+            _lobbyManager.LeaveLobby(Context.ConnectionId);
             await LoggedUsers();
             await base.OnDisconnectedAsync(exception);
         }

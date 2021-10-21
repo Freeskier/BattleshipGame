@@ -12,30 +12,44 @@ namespace BattleshipGame.BLL.Hubs
     public class GameHub : Hub<IGameHub>
     {
   
-        public static IRoomManager _roomManager;
+        public readonly IRoomManager _roomManager;
+        public readonly ILobbyManager _lobbyManager;
+        public readonly IHubContext<ChatHub, IChatHub> _chatHub;
         
 
-        public GameHub(IRoomManager roomManager)
+        public GameHub(IRoomManager roomManager, IHubContext<ChatHub, IChatHub> chatHub, ILobbyManager lobbyManager)
         {
             _roomManager = roomManager;
+            _chatHub = chatHub;
+            _lobbyManager = lobbyManager;
         }
 
         public async Task SendChallenge(ChallengeUserModel model)
         {
-            var userConID = _roomManager.GetUserConnectionID(model.ToUser);
+            var userConID = _lobbyManager.ConnectedUsers[model.ToUser].gameID;
             await Clients.Client(userConID).ChallengeUserCallback(model);
         }
 
         public async Task AcceptChallenge(ChallengeUserModel model)
         {
-            var roomID = _roomManager.CreateRoom(model.FromUser, model.ToUser, out string playerAconnID, out string playerBconnID);
-            await Clients.All.StartGame(new StartGameModel {
+            var usrFromID = _lobbyManager.ConnectedUsers[model.FromUser].gameID;
+            var usrToID = _lobbyManager.ConnectedUsers[model.ToUser].gameID;
+            var roomID = _roomManager.CreateRoom(usrFromID, usrToID, model.FromUser, model.ToUser);
+
+            await _chatHub.Clients.Clients(_lobbyManager.ConnectedUsers[model.FromUser].chatID,
+                _lobbyManager.ConnectedUsers[model.ToUser].chatID).ReceiveMessage(
+                    new MessageModel {
+                        Text = "Created room: " + roomID,
+                        User = "SERVER",
+                        Date = DateTime.Now.ToShortDateString()
+                    });
+            await Clients.Clients(usrFromID, usrToID).StartGame(new StartGameModel {
                 RoomID = roomID,
-                StartingUserConnID = playerAconnID
+                StartingUserConnID = usrFromID
             });
 
             _roomManager.GetMoveResponseData(roomID, Context.ConnectionId, false, out MoveResponseModel respA, out MoveResponseModel respB);
-            await Clients.Client(playerBconnID).MoveResponse(respB);
+            await Clients.Client(usrToID).MoveResponse(respB);
             await Clients.Client(Context.ConnectionId).MoveResponse(respA);
         }
 
@@ -50,21 +64,13 @@ namespace BattleshipGame.BLL.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            lock(_roomManager)
-            {
-                _roomManager.AddUserToConnected(Context.ConnectionId, Context.User.Identity.Name);
-                Console.WriteLine(Context.User.Identity.Name);
-            }
+            _lobbyManager.JoinLobby(Context.User.Identity.Name, "", Context.ConnectionId);
             await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            lock(_roomManager)
-            {
-                _roomManager.RemoveUserFromConnected(Context.ConnectionId);
-                Console.WriteLine("discon " + Context.User.Identity.Name);
-            }
+            _lobbyManager.LeaveLobby(Context.ConnectionId);
             await base.OnDisconnectedAsync(exception);
         }
 
