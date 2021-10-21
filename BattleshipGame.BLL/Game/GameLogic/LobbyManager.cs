@@ -46,5 +46,13 @@ namespace BattleshipGame.BLL.Game.GameLogic
                 InGame = _roomManager.Rooms.Any(x => x.Value.PlayerA?.Username == u.Key || x.Value.PlayerB?.Username == u.Key)
             });
         }
+
+        public string GetUsername(string connID)
+            => ConnectedUsers.FirstOrDefault(u => u.Value.gameID == connID).Key;
+        
+
+        public string GetChatConnID(string connID)
+            => ConnectedUsers.FirstOrDefault(u => u.Value.gameID == connID).Value.chatID;
+        
     }
 }

@@ -11,5 +11,8 @@ namespace BattleshipGame.BLL.Game.GameLogic.Interfaces
         string CreateRoom(string playerAconnID, string playerBconnID, string userA, string userB);
         bool ProcessMove(MoveModel model, string connectionId, out string enemyConnID);
         void GetMoveResponseData(string roomId, string connID, bool extraMove, out MoveResponseModel responseA, out MoveResponseModel responseB);
+        bool IsGameOver(string roomID, out string winningUser);
+        void DeleteRoomWithUser(string connectionId);
+        string GetUserEnemyConnID(string connectionId);
     }
 }

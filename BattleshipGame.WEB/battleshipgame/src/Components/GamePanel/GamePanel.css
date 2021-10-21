@@ -12,16 +12,41 @@
     display:flexbox;
     justify-content: space-between;
     padding-bottom: 50px;
+    position: relative;
 }
 
 .board-container {
     
     padding: 50px 50px 10px 50px;
     display: inline-block;
-    
 }
 
 .game-panel-with-chat {
     width: fit-content;
     margin: 0 auto;
+}
+
+.game-over {
+    position:absolute;
+    width: 50%;
+    height: 50%;
+    z-index: 3000;
+    background-color: rgba(47, 165, 57, 0.836);
+    margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    max-height: 300px;
+    max-width: 500px;
+    border: 2px solid rgba(20, 99, 27, 0.76);
+    border-radius: 20px;
+    transition: 500ms all ease-in-out;
+    text-align: center;
+    align-items: center;
+    
+}
+
+.game-over-content {
+    margin-top: 60px;
 }

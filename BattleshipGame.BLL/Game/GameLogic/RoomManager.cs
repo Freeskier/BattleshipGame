@@ -18,8 +18,6 @@ namespace BattleshipGame.BLL.Game.GameLogic
         {
             _gameAI = gameAI;
             Rooms = new Dictionary<string, Room>();
-            //ConnectedUsers.Add("asdasd", "BOT");
-            Rooms.Add("asdasdasd", new Room(){PlayerB = new Player{Username = "BOT", ConnectionID = "123"}});
         }
 
 
@@ -48,6 +46,10 @@ namespace BattleshipGame.BLL.Game.GameLogic
             return enemy.RecieveShoot(model.X, model.Y);
         }
 
+        public bool IsGameOver(string roomID, out string winningUser)
+            => Rooms[roomID].IsGameOver(out winningUser);
+        
+
         public void GetMoveResponseData(string roomID, string connID, bool extraMove, out MoveResponseModel responseA, out MoveResponseModel responseB)
         {
             var room = Rooms[roomID];
@@ -74,6 +76,26 @@ namespace BattleshipGame.BLL.Game.GameLogic
             
         }
 
+
+        public void DeleteRoomWithUser(string connectionId)
+        {
+            var room = Rooms.FirstOrDefault(u => u.Value.PlayerA?.ConnectionID == connectionId 
+                || u.Value.PlayerB?.ConnectionID == connectionId).Key;
+            Rooms.Remove(room);
+        }
+
+        public string GetUserEnemyConnID(string connectionId)
+        {
+            var room = Rooms.FirstOrDefault(u => u.Value.PlayerA?.ConnectionID == connectionId).Value;
+            if(room != null)
+                return room.PlayerB.ConnectionID;
+            room = Rooms.FirstOrDefault(u => u.Value.PlayerB?.ConnectionID == connectionId).Value;
+            if(room != null)
+                return room.PlayerA.ConnectionID;
+            return "";
+        }
+       
+
         private Player GetEnemy(Room room, string connID)
         {
             if(room.PlayerA.ConnectionID.Equals(connID))
@@ -86,6 +108,5 @@ namespace BattleshipGame.BLL.Game.GameLogic
                 return room.PlayerA;
             return room.PlayerB;
         }
-
     }
 }

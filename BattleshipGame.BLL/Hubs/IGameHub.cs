@@ -10,5 +10,6 @@ namespace BattleshipGame.BLL.Hubs
         Task AcceptChallenge(ChallengeUserModel model);
         Task StartGame(StartGameModel model);
         Task MoveResponse(MoveResponseModel model);
+        Task GameOver(GameOverModel model);
     }
 }

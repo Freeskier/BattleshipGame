@@ -41,7 +41,7 @@ namespace BattleshipGame.BLL.Hubs
                     new MessageModel {
                         Text = "Created room: " + roomID,
                         User = "SERVER",
-                        Date = DateTime.Now.ToShortDateString()
+                        Date = DateTime.Now.ToString("dd.MM.yyyy, hh:mm:ss")
                     });
             await Clients.Clients(usrFromID, usrToID).StartGame(new StartGameModel {
                 RoomID = roomID,
@@ -51,14 +51,23 @@ namespace BattleshipGame.BLL.Hubs
             _roomManager.GetMoveResponseData(roomID, Context.ConnectionId, false, out MoveResponseModel respA, out MoveResponseModel respB);
             await Clients.Client(usrToID).MoveResponse(respB);
             await Clients.Client(Context.ConnectionId).MoveResponse(respA);
+            await _chatHub.Clients.All.LoggedUsers(_lobbyManager.GetLoggedUsers());
         }
 
         public async Task MakeMove(MoveModel model)
         {
             var extraMove = _roomManager.ProcessMove(model, Context.ConnectionId, out string enemyConnID);
+
             _roomManager.GetMoveResponseData(model.RoomID, Context.ConnectionId, extraMove, out MoveResponseModel respA, out MoveResponseModel respB);
+            
             await Clients.Client(enemyConnID).MoveResponse(respB);
             await Clients.Client(Context.ConnectionId).MoveResponse(respA);
+    
+            if(_roomManager.IsGameOver(model.RoomID, out string winningUser))
+            {
+                await SendGameOver("", enemyConnID, winningUser);
+                return;
+            }
         }
 
 
@@ -70,8 +79,31 @@ namespace BattleshipGame.BLL.Hubs
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
+            var enemyConnID = _roomManager.GetUserEnemyConnID(Context.ConnectionId);
+            if(!enemyConnID.Equals(""))
+            {
+                var winningUser = _lobbyManager.GetUsername(enemyConnID);
+                await SendGameOver("Lost connection", enemyConnID, winningUser);
+            }
             _lobbyManager.LeaveLobby(Context.ConnectionId);
             await base.OnDisconnectedAsync(exception);
+        }
+
+        private async Task SendGameOver(string serverMessage, string enemyConnID, string winningUser) 
+        {
+            _roomManager.DeleteRoomWithUser(Context.ConnectionId);
+            await Clients.Clients(Context.ConnectionId, enemyConnID).GameOver(new GameOverModel {
+                    WinningUser = winningUser,
+                    ServerMessage = serverMessage
+                });
+            await _chatHub.Clients.Clients(_lobbyManager.GetChatConnID(Context.ConnectionId), 
+                _lobbyManager.GetChatConnID(enemyConnID)).ReceiveMessage(
+                    new MessageModel {
+                        Text = $"Game Over! User {winningUser} wins! " + $"\n{serverMessage}",
+                        User = "SERVER",
+                        Date = DateTime.Now.ToString("dd.MM.yyyy, hh:mm:ss")
+                    });
+            await _chatHub.Clients.All.LoggedUsers(_lobbyManager.GetLoggedUsers());
         }
 
     }

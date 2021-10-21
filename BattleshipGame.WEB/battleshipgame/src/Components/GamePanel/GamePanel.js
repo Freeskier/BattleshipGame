@@ -24,8 +24,10 @@ function GamePanel() {
     const [showBoards, setShowBoards] = useState(false);
     const [autoPlay, setAutoPlay] = useState(false);
     const [update, setUpdate] = useState(false);
-
-
+    const [gameOver, setGameOver] = useState(false);
+    const [gameOverData, setGameOverData] = useState({
+        winningUser: "",
+        serverMessage: "",});
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
@@ -37,7 +39,7 @@ function GamePanel() {
     }, []);
 
     useEffect(() =>{
-        if(isMyMove && update && autoPlay) {
+        if(isMyMove && update && autoPlay && !gameOver) {
             setTimeout(() => {
                 onSquareClick(1, 1);
                 setUpdate(false);
@@ -46,12 +48,26 @@ function GamePanel() {
     }, [update, setUpdate, isMyMove])
 
     useEffect(() => {
+        if(gameOver){
+            setTimeout(() => {
+                setShowBoards(false);
+                setMyBoard([]);
+                setEnemyBoard([]);
+                setMyShipStats([])
+                setEnemyStats([])
+                setRoomID('')
+                setAutoPlay(false);
+                setGameOver(false);
+            }, [4000])
+        }
+    },[gameOver]);
+
+    useEffect(() => {
         let unmounted = false;
         if (connection) {
             connection.start()
             .then(result => {    
                 connection.on('ChallengeUserCallback', challenge => {
-                    //if(unmounted) return;
                     setChallengingUser(challenge.fromUser);
                     setOpenResponseModal(true);
                 });
@@ -70,7 +86,16 @@ function GamePanel() {
                     setIsMyMove(callback.onMove);
                     setShowBoards(true);
                     setUpdate(true);
-                })
+                });
+
+                connection.on('GameOver', callback => {
+                    setGameOverData({
+                        winningUser: callback.winningUser,
+                        serverMessage: callback.serverMessage
+                    })
+                    console.log(callback.winningUser)
+                    setGameOver(true);
+                });
             })
                 .catch(e => {
                     if(e.statusCode === 401)
@@ -151,22 +176,29 @@ function GamePanel() {
     }
 
 
-
     return ( 
         <div className='game-panel-container'>
             <div className='game-panel-with-chat'>
                 {showBoards && <div className='boards-container'>
+                    {gameOver && <div className='game-over'>
+                        <div className='game-over-content'>
+                            <h1>Game Over</h1>
+                            <label>User {gameOverData.winningUser} wins!</label>
+                            <p/>
+                            <label>{gameOverData.serverMessage}</label>
+                        </div>
+                    </div>}
                     <div className='board-container' >
                         <h1>Your board </h1>
                         <div className='board-with-stats'>
-                            <Board isEnemy={false} isDisabled={isMyMove} data={myBoard}/>
+                            <Board isEnemy={false} isDisabled={isMyMove || gameOver} data={myBoard}/>
                             <Stats data={myShipStats}/>
                         </div>
                     </div>
                     <div className='board-container'>
                         <h1>Enemy's board </h1>
                         <div className='board-with-stats'>
-                            <Board isEnemy={true} isDisabled={!isMyMove} onSquareClick={onSquareClick} data={enemyBoard}/>
+                            <Board isEnemy={true} isDisabled={!isMyMove || gameOver} onSquareClick={onSquareClick} data={enemyBoard}/>
                             <Stats data={enemyStats}/>
                         </div>
                     </div>

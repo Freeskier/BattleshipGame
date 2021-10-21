@@ -56,7 +56,7 @@ function ChallengeModal({isOpen, setOpen, user, sendChallenge, isItResponse}) {
                     {!isItResponse?
                         <h3>Do you want to challenge {user}?</h3>
                     :
-                        <h3>{user} invites you to play/</h3>}
+                        <h3>{user} invites you to play </h3>}
                     <p>Remaining time: {remainingTime}s...</p>
                 </div>
                 <div className='checkbox'> 

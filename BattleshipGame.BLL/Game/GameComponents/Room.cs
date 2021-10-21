@@ -14,5 +14,21 @@ namespace BattleshipGame.BLL.Game.GameModels
             CreationDate = DateTime.Now;
             ID = Guid.NewGuid().ToString();
         }
+
+        public bool IsGameOver(out string winningUser)
+        {
+            if(PlayerA.Board.IsGameOver)
+            {
+                winningUser = PlayerB.Username;
+                return true;
+            }
+            else if(PlayerB.Board.IsGameOver)
+            {
+                winningUser = PlayerA.Username;
+                return true;
+            }
+            winningUser = "";
+            return false;
+        }
     }
 }
