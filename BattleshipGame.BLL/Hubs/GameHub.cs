@@ -60,14 +60,14 @@ namespace BattleshipGame.BLL.Hubs
 
             _roomManager.GetMoveResponseData(model.RoomID, Context.ConnectionId, extraMove, out MoveResponseModel respA, out MoveResponseModel respB);
             
-            await Clients.Client(enemyConnID).MoveResponse(respB);
-            await Clients.Client(Context.ConnectionId).MoveResponse(respA);
-    
             if(_roomManager.IsGameOver(model.RoomID, out string winningUser))
             {
                 await SendGameOver("", enemyConnID, winningUser);
                 return;
             }
+            await Clients.Client(enemyConnID).MoveResponse(respB);
+            await Clients.Client(Context.ConnectionId).MoveResponse(respA);
+    
         }
 
 
