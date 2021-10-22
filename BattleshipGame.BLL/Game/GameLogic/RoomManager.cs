@@ -20,8 +20,6 @@ namespace BattleshipGame.BLL.Game.GameLogic
             Rooms = new Dictionary<string, Room>();
         }
 
-
-
         public string CreateRoom(string userAConnID, string userBConnID, string userA, string userB)
         {
             var room = new Room {
